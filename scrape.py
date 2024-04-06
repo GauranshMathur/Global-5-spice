@@ -8,6 +8,7 @@ def download_json(agency_name, base_url, params):
     print(f"trying to access{base_url}" )
     while True:
         params['page'] = page
+        print(f"getting {base_url}{params}")
         response = requests.get(base_url, params=params, headers=headers)
         if page == 10:
             break
@@ -20,7 +21,7 @@ def download_json(agency_name, base_url, params):
             break
         if data:
             print("")
-        with open(f"./data/{agency_name}_data_page_{page}.json", 'w') as file:
+        with open(f"./data/{agency_name}_data_page_{page}.json", 'w', encoding="utf-8") as file:
             file.write(response.text)
         print(f"Downloaded page {page}")
         page += 1   
