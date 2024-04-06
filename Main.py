@@ -9,14 +9,7 @@ def fine_tune_model(training_file_path, model_name="gpt-3.5-turbo"):
     # Create an instance of the OpenAI client
     client = OpenAI()
 
-    # Upload the training file
-    response = client.files.create(
-        file=open(training_file_path, "rb"),
-        purpose="fine-tune"
-    )
-
-    # Extract the file ID from the response
-    file_id = response.id  # Access the 'id' attribute
+    file_id = ""
 
     # Create a fine-tuning job
     client.fine_tuning.jobs.create(

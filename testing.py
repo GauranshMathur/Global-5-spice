@@ -1,19 +1,11 @@
-import openai
-import tiktoken
-from IPython.display import display, Markdown
- 
-openai.api_key = "YOUR API KEY"
+from openai import OpenAI
+client = OpenAI()
 
-prompt = """
-I am a business owner that wants tp apply for a trademark in singapore how will i do it?
-"""
-
-result = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "You are a government service bot that needs to recommend services to businesses. You should help the user answer the question"},
-        {"role": "user", "content": prompt}
-    ],
+completion = client.chat.completions.create(
+  model="ft:gpt-3.5-turbo-0125:personal::9AxHOg7x",
+  messages=[
+    {"role": "system", "content": "You are a goverment service bot"},
+    {"role": "user", "content": "I am a business owner and i want to create a trademark in singapore. How will i do it"}
+  ]
 )
-
-print(result)
+print(completion.choices[0].message)
