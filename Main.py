@@ -1,45 +1,32 @@
-import openai
 import os
-from API_Key import key
-
-
-# Set the OPENAI_API_KEY environment variable
-os.environ['OPENAI_API_KEY'] = key
+from API_Key import key  # Import the API key from your module
 from openai import OpenAI
-client = OpenAI()
 
- 
-client.files.create(
-  file=open("train.jsonl", "rb"),
-  purpose="fine-tune"
-)
+def fine_tune_model(training_file_path, model_name="gpt-3.5-turbo"):
+    # Set the OPENAI_API_KEY environment variable
+    os.environ['OPENAI_API_KEY'] = key  # Set the API key
 
-client = OpenAI()
+    # Create an instance of the OpenAI client
+    client = OpenAI()
 
+    # Upload the training file
+    response = client.files.create(
+        file=open(training_file_path, "rb"),
+        purpose="fine-tune"
+    )
 
-client.fine_tuning.jobs.create(
-  training_file="file-rIua39sJX1O64gzxTYfpvJx7",
-  model="gpt-3.5-turbo" #change to gpt-4-0613 if you have access
-)
+    # Extract the file ID from the response
+    file_id = response.id  # Access the 'id' attribute
 
-client = OpenAI()
+    # Create a fine-tuning job
+    client.fine_tuning.jobs.create(
+        training_file=file_id,
+        model=model_name  # Specify the model name
+    )
 
+if __name__ == "__main__":
+    # Specify the path to the training file
+    training_file_path = "data/test.json"
 
-# List 10 fine-tuning jobs
-client.fine_tuning.jobs.list(limit=10)
-
-
-# Retrieve the state of a fine-tune
-client.fine_tuning.jobs.retrieve("...")
-
-
-# Cancel a job
-client.fine_tuning.jobs.cancel("...")
-
-
-# List up to 10 events from a fine-tuning job
-client.fine_tuning.jobs.list_events(fine_tuning_job_id="...", limit=10)
-
-
-# Delete a fine-tuned model (must be an owner of the org the model was created in)
-client.models.delete("ft:gpt-3.5-turbo:xxx:xxx")
+    # Call the function to initiate fine-tuning
+    fine_tune_model(training_file_path)
