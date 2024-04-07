@@ -9,7 +9,7 @@ os.environ['OPENAI_API_KEY'] = key  # Set the API key
 client = OpenAI()
 
 # Specify the path to the training file
-training_file_path = "data/data.jsonl"
+training_file_path = "data/data.json"
 
 # Specify the model name
 model_name = "gpt-3.5-turbo"  # Using the GPT-3.5 Turbo model
