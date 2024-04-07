@@ -11,7 +11,7 @@ client = OpenAI()
 
 # Create chat completion request
 completion = client.chat.completions.create(
-    model="ft:gpt-3.5-turbo-1106:personal::9BDd4X7m",
+    model="ft:gpt-3.5-turbo-1106:personal::9BEJ3eB7",
     messages=[
         {"role": "system", "content": "You are a government service bot"},
         {"role": "user", "content": "I am a business owner and I want to create a trademark in Singapore. How will I do it?"}
