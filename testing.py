@@ -4,6 +4,7 @@ import os
 
 # Set OpenAI API key
 os.environ['OPENAI_API_KEY'] = key
+temperature = 0.1
 
 # Initialize OpenAI client
 client = OpenAI()
@@ -14,7 +15,8 @@ completion = client.chat.completions.create(
     messages=[
         {"role": "system", "content": "You are a government service bot"},
         {"role": "user", "content": "I am a business owner and I want to create a trademark in Singapore. How will I do it?"}
-    ]
+    ],
+    temperature=temperature
 )
 
 # Extracting the response and confidence
